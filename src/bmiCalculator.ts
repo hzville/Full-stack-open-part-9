@@ -10,11 +10,11 @@ const parseArguments = (args: string[]): BmiValues => {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Invalid arguments type, check that numbers were provided');
   }
-}
+};
 
 const calculateBmi = (height: number, weight: number): string => {
     const bmi: number = Math.round(weight/((height/100)**2)*100)/100;
@@ -38,7 +38,7 @@ const calculateBmi = (height: number, weight: number): string => {
       default:
         return 'BMI could not be calculated';
     }
-}
+};
 
 if (require.main === module) {
   try {
@@ -46,7 +46,7 @@ if (require.main === module) {
     console.log(calculateBmi(height, weight));
   } catch (error: unknown) {
     let errorMessage = 'Error calculating BMI. ';
-    if (error instanceof Error) {
+    if (error instanceof Error){
       errorMessage += error.message;
     }
     console.log(errorMessage);

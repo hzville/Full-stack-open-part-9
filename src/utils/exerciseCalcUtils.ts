@@ -6,40 +6,40 @@ interface ExerciseValues {
 const parseArguments = (args: string[]): ExerciseValues => {
   if (args.length < 4) throw new Error('Too few arguments, check arguments');
 
-  const target = Number(args[2])
+  const target = Number(args[2]);
 
   const valuesArray = args.slice(3).map(arg => {
     if (isNaN(Number(arg))){
       throw new Error('Error, argument was not a number');
     }
     return Number(arg);
-  })
+  });
   
   return {
     hoursArray: valuesArray,
     target: target
-  }
-}
+  };
+};
 
 const getPeriodLength = (exerciseHours: number[]): number => {
   return exerciseHours.length;
-}
+};
 
 const getTraningDays = (exerciseHours: number[]): number => {
   const listOfTraningDays = exerciseHours.filter(value => value > 0);
   return listOfTraningDays.length;
-}
+};
 
 const getAverageTraningTime = (exerciseHours: number[]): number => {
   const traningDays = getPeriodLength(exerciseHours);
   const traningHoursTotal = exerciseHours.reduce((acc, cur) => acc + cur, 0);
   return traningHoursTotal / traningDays;
-}
+};
 
 const getSuccessResult = (exerciseHours: number[], target: number): boolean => {
   const averageTraningTime = getAverageTraningTime(exerciseHours);
   return averageTraningTime >= target;
-}
+};
 
 const getRating = (exerciseHours: number[]): number => {
   const avg = getAverageTraningTime(exerciseHours);
@@ -56,8 +56,8 @@ const getRating = (exerciseHours: number[]): number => {
     default:
       throw new Error(`Error calculating exercise rating for value ${avg}`);
     }
-  return 1
-}
+  return 1;
+};
 
 const getRatingDescription = (exerciseHours: number[]): string => {
   const rating = getRating(exerciseHours);
@@ -74,6 +74,6 @@ const getRatingDescription = (exerciseHours: number[]): string => {
     default:
       throw new Error(`Error getting description for ratings ${rating}`);
   }
-}
+};
 
-export {parseArguments, getTraningDays, getAverageTraningTime, getSuccessResult, getRating, getRatingDescription}
+export {parseArguments, getTraningDays, getAverageTraningTime, getSuccessResult, getRating, getRatingDescription};

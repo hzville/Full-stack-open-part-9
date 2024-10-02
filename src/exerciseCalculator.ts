@@ -5,7 +5,7 @@ import {
   getSuccessResult,
   getRating,
   getRatingDescription
-} from './utils/exerciseCalcUtils'
+} from './utils/exerciseCalcUtils';
 
 interface Result { 
   periodLength: number,
@@ -26,15 +26,15 @@ const calculateExercises = (exerciseHours: number[], targetAmount: number): Resu
     ratingDescription: getRatingDescription(exerciseHours),
     target: targetAmount,
     average: getAverageTraningTime(exerciseHours)
-  }
-}
+  };
+};
 
 try {
   const {hoursArray, target} = parseArguments(process.argv);
   console.log(calculateExercises(hoursArray, target));
 } catch (error: unknown) {
   let errorMessage = 'Error calculating exercises. ';
-  if (error instanceof Error) {
+  if (error instanceof Error){
     errorMessage += error.message;
   }
   console.log(errorMessage);
