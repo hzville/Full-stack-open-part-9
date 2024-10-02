@@ -5,14 +5,16 @@ interface ExerciseValues {
 
 const parseArguments = (args: string[]): ExerciseValues => {
   if (args.length < 4) throw new Error('Too few arguments, check arguments');
-  
-  const valuesArray = args.slice(2).map(arg => {
+
+  const target = Number(args[2])
+
+  const valuesArray = args.slice(3).map(arg => {
     if (isNaN(Number(arg))){
       throw new Error('Error, argument was not a number');
     }
     return Number(arg);
   })
-  const target = valuesArray.shift();
+  
   return {
     hoursArray: valuesArray,
     target: target
