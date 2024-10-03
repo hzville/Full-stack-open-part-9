@@ -42,4 +42,4 @@ if (require.main === module) {
   }
 }
 
-export {calculateExercises}
+export {calculateExercises};
