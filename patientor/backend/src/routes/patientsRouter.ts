@@ -1,8 +1,9 @@
 import express from 'express';
-import { Response } from 'express';
-import { NonSensitivePatientData } from '../types';
+import { Request, Response } from 'express';
+import { NonSensitivePatientData, NewPatientObject, Patient } from '../types';
 import patientsService from '../services/patientsService';
-import validateNewPatientObject from '../utils/utils';
+import {validateNewPatientObject} from '../utils/utils';
+import { z } from 'zod';
 
 const router = express.Router();
 
@@ -10,18 +11,19 @@ router.get('/', (_req, res: Response<NonSensitivePatientData[]>) => {
   res.send(patientsService.getNonSensitivePatientData());
 });
 
-router.post('/', (req, res) => {
+router.post('/', (req: Request<unknown, unknown, NewPatientObject>, res: Response<Patient | { error: unknown } >) => {
   try {
     const newPatientEntry = validateNewPatientObject(req.body);
     const addedPatient = patientsService.addNewPatient(newPatientEntry);
     res.json(addedPatient);
 
   } catch (error: unknown) {
-    let errorMessage = 'Error adding new patient';
-    if (error instanceof Error) {
-      errorMessage += ' Error was: ' + error.message;
+    const errorMessage = 'Error adding new patient';
+    if (error instanceof z.ZodError){
+      res.status(400).send({ error: error.issues });
+    } else {
+    res.status(400).send({error: errorMessage});
     }
-    res.status(400).send(errorMessage);
   }
 });
 
