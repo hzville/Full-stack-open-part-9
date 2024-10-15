@@ -1,8 +1,9 @@
 import { useState } from "react";
 import diaryService from "../services/diaryServices";
-import { DiaryEntry } from "../types";
+import { DiaryEntry, Visibility, Weather } from "../types";
 import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
+import styles from '../styles/styles.module.css';
 
 interface AddDiaryFormProps {
   setDiarys: React.Dispatch<React.SetStateAction<DiaryEntry[]>>;
@@ -51,11 +52,32 @@ const AddDiaryForm = ({setDiarys}: AddDiaryFormProps) => {
       <ErrorMessage message={error}/>
       <br/>
       <form onSubmit={handleSubmit}>
-        date <input value={date} onChange={({target}) => setDate(target.value)}/>
+        date <input type='date' value={date} onChange={({target}) => setDate(target.value)}/>
         <br/>
-        visibility <input value={visibility} onChange={({ target }) => setVisibility(target.value) }/>
+        weather
+        {Object.values(Visibility).map((option) => (
+          <label key={option} className={styles.radioSelector}> {option}
+            <input 
+              type='radio'
+              value={option}
+              checked={visibility == option}
+              onChange={({target}) => setVisibility(target.value)}
+            />
+          </label>
+        ))}
         <br/>
-        weather <input value={weather} onChange={({target}) => setWeather(target.value)}/>
+        visibility
+        {Object.values(Weather).map((option) => (
+          <label key={option} className={styles.radioSelector}> 
+            {option}
+            <input
+              type='radio'
+              value={option}
+              checked={weather == option}
+              onChange={({target}) => setWeather(target.value)}
+            />
+          </label>
+        ))}
         <br/>
         comment <input value={comment} onChange={({target}) => setComment(target.value)}/>
         <br/>
