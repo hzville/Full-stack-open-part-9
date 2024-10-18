@@ -40,6 +40,22 @@ const Patient = () => {
         <b>Date of birth:</b> {patient.dateOfBirth}
         <br/>
         <b>Occupation:</b> {patient.occupation}
+        <br/>
+        <b>Entries:</b>
+        <>
+          {patient.entries.map((entry) => (
+            <div style={{border: '1px solid'}}>
+              <b>Date:</b> {entry.date} 
+              <br/>
+              <b>Description:</b> {entry.description} 
+              <br/>
+              {entry.diagnosisCodes?.map((code) => (
+                <li>{code}</li>
+              ))}
+              <br/>
+            </div>
+          ))}
+        </>
       </CardContent>
     </Card>
   );
