@@ -1,4 +1,4 @@
-## Patientor frontend
+## Flight diary backend
 
 Install dependencies  ```npm install```
 

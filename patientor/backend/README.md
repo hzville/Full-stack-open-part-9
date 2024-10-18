@@ -1,4 +1,4 @@
-## Patientor frontend
+## Patientor backend
 
 Install dependencies  ```npm install```
 

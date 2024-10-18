@@ -1,4 +1,6 @@
-## Flight diary frontend exercise
+## Flight diary frontend
+
+Install dependencies  ```npm install```
 
 Available commands:
 
