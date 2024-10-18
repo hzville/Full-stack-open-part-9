@@ -2,12 +2,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import patientService from '../services/patients';
-import { Patient as PatientType } from '../types';
+import patientService from '../services/patientsService';
+import { Diagnosis, Patient as PatientType } from '../types';
+import diagnosisService from '../services/diagnosisService';
 
 const Patient = () => {
   const id = useParams().id;
   const [patient, setPatient] = useState<PatientType>();
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>();
 
   useEffect(() => {
     if (!id) return;
@@ -15,8 +17,18 @@ const Patient = () => {
       const result = await patientService.getPatientById(id);
       setPatient(result);
     };
+    const getDiagnoses = async () => {
+      const result = await diagnosisService.getDiagnoses();
+      setDiagnoses(result);
+    };
     getPatientById();
+    getDiagnoses();
   },[id]);
+
+  const findDiagDesc = (code: string) => {
+    const diagnosis = diagnoses?.find((diag) => diag.code === code);
+    return diagnosis ? diagnosis.name : "Unknown diagnosis code";
+  };
 
   if (!patient) {
     return(
@@ -50,7 +62,7 @@ const Patient = () => {
               <b>Description:</b> {entry.description} 
               <br/>
               {entry.diagnosisCodes?.map((code) => (
-                <li>{code}</li>
+                <li>{code} : {findDiagDesc(code)}</li>
               ))}
               <br/>
             </div>
